@@ -5,14 +5,31 @@ import { supabase } from "@/lib/supabaseClient";
 import { toast } from "sonner";
 import { Save } from "lucide-react";
 
-export default function MomentsForm() {
+type Moment = {
+  id: string;
+  video_url: string;
+  file_path: string;
+  moment_date: string;
+};
+
+export default function MomentsForm({
+  onSuccess,
+  addMoment,
+}: {
+  onSuccess: () => void;
+  addMoment: (moment: Moment) => void;
+}) {
   const [file, setFile] = useState<File | null>(null);
   const [date, setDate] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     if (!file || !date) {
       toast.error("Please select a file and date.");
+      setIsSubmitting(false);
       return;
     }
 
@@ -26,6 +43,7 @@ export default function MomentsForm() {
 
     if (uploadError) {
       toast.error("Upload failed.");
+      setIsSubmitting(false);
       return;
     }
 
@@ -33,13 +51,17 @@ export default function MomentsForm() {
       .from("moments")
       .getPublicUrl(filePath);
 
-    const { error: insertError } = await supabase.from("moments").insert([
-      {
-        video_url: publicURL?.publicUrl,
-        moment_date: date,
-        is_visible: true,
-      },
-    ]);
+    const { data: inserted, error: insertError } = await supabase
+      .from("moments")
+      .insert([
+        {
+          video_url: publicURL?.publicUrl,
+          file_path: fileName,
+          moment_date: date,
+        },
+      ])
+      .select("id, video_url, file_path, moment_date")
+      .single();
 
     if (insertError) {
       toast.error("Failed to save moment.");
@@ -47,7 +69,13 @@ export default function MomentsForm() {
       toast.success("Moment uploaded!");
       setFile(null);
       setDate("");
+      if (inserted) {
+        addMoment(inserted); // Optimistic update
+      }
+      onSuccess(); // Close modal
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -78,10 +106,11 @@ export default function MomentsForm() {
 
       <button
         type="submit"
-        className="w-full flex items-center cursor-pointer justify-center gap-2 bg-[#CFA83C] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#b89632] transition"
+        disabled={isSubmitting}
+        className="cursor-pointer w-full flex items-center justify-center gap-2 bg-[#CFA83C] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#b89632] transition disabled:opacity-50"
       >
         <Save className="w-4 h-4" />
-        Upload Moment
+        <span>{isSubmitting ? "Uploading..." : "Upload Moment"}</span>
       </button>
     </form>
   );

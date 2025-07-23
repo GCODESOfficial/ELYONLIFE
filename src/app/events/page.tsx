@@ -24,7 +24,6 @@ export default function EventsPage() {
       const { data, error } = await supabase
         .from("moments")
         .select("id, video_url, moment_date")
-        .eq("is_visible", true)
         .order("moment_date", { ascending: false });
 
       if (!error && data) {
@@ -61,7 +60,7 @@ export default function EventsPage() {
           {loading ? (
             <p className="text-[#CFA83C] text-center">Loading moments...</p>
           ) : moments.length === 0 ? (
-            <p className="text-[#CFA83C] text-center">No moments available.</p>
+            <p className="text-[#CFA83C] text-center">Stay tuned for beautiful moments coming soon.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {moments.slice(0, 6).map((moment) => (
