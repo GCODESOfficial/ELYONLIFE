@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     domains: [
-      "lqpkfznmbxcybmqbvwir.supabase.co"
+      "ngmkygeuzhvfwrfkaoeu.supabase.co"
     ],
   },
 };
