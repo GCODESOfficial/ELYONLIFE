@@ -69,6 +69,12 @@ export default function Navbar() {
               }>
                 Sermons
               </Link>
+
+               <Link href="/partnership" className={
+                `hover:text-[#CFA83C] transition-colors${pathname === "/sermons" ? " text-[#CFA83C]" : ""}`
+              }>
+                Partnership
+              </Link>
             </div>
           </div>
 
