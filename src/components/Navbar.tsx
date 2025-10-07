@@ -80,7 +80,7 @@ export default function Navbar() {
 
           {/* Social Icons - Desktop */}
           <div className="hidden md:flex items-center space-x-4 border border-[#292929] rounded-full px-4 py-2">
-            <Link href="https://web.facebook.com/profile.php?id=61552813367120" target="_blank" title="Facebook">
+            <Link href="https://web.facebook.com/profile.php?id=61581976405555" target="_blank" title="Facebook">
               <CgFacebook className="w-5 h-5 hover:text-[#CFA83C] cursor-pointer" />
             </Link>
             <Link href="https://wa.me/2348038128101" target="_blank" title="WhatsApp">
@@ -116,7 +116,7 @@ export default function Navbar() {
             </div>
             <div className="flex justify-center pb-8">
               <div className="flex items-center space-x-4 border border-[#292929] rounded-full px-4 py-2">
-                <Link href="https://web.facebook.com/profile.php?id=61552813367120" target="_blank" title="Facebook">
+                <Link href="https://web.facebook.com/profile.php?id=61581976405555" target="_blank" title="Facebook">
                   <CgFacebook className="w-5 h-5 hover:text-[#CFA83C] cursor-pointer" />
                 </Link>
                 <Link href="https://wa.me/2348038128101" target="_blank" title="WhatsApp">
